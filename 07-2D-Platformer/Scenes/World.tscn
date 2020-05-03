@@ -1,0 +1,152 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Scenes/WorldComplete.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/tile.tres" type="TileSet" id=3]
+[ext_resource path="res://Assets/ground_grass.png" type="Texture" id=4]
+[ext_resource path="res://Assets/ground_grass_small.png" type="Texture" id=5]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/echanted.jpg" type="Texture" id=7]
+[ext_resource path="res://Assets/mushroom_red.png" type="Texture" id=8]
+[ext_resource path="res://Scripts/Meat.gd" type="Script" id=9]
+[ext_resource path="res://Assets/Goods Icons.png" type="Texture" id=10]
+[ext_resource path="res://Score.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Global.tscn" type="PackedScene" id=12]
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=17]
+animations = [ {
+"frames": [ SubResource( 16 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 14.9336, 16.6666 )
+
+[sub_resource type="GDScript" id=19]
+script/source = "extends Label
+
+onready var Labe = get_node(\"/root/World/Score\")
+var score = 0
+
+func _process(delta):
+	var Labe = get_node(\"/root/World/Score\")
+	Labe.text = \"Score: \" + str(score)
+	
+func _on_Meat_body_entered(body):
+	if body.name == \"Player\":
+		score += 5
+	
+"
+
+[node name="World" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 532.001, 325 )
+scale = Vector2( 0.585714, 0.609523 )
+texture = ExtResource( 7 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 114.551, 459.62 )
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2( 537.071, 588 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Ground"]
+scale = Vector2( 3.5, 2 )
+texture = ExtResource( 4 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ground"]
+scale = Vector2( 3.5, 2 )
+polygon = PoolVector2Array( 190, -41.6, 190, -7.8, 167.2, 33, 165.8, 33, 158.8, 40, 142, 40, -26, 47, -165, 47, -190, -4.4, -190, -41.6, -184, -46.9, 184, -47 )
+
+[node name="Platforms" type="Node" parent="."]
+
+[node name="Platform2" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 363.453, 376.181 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Platforms/Platform2"]
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 5 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Platform2"]
+scale = Vector2( 0.4, 0.4 )
+polygon = PoolVector2Array( 100.5, -44.6, 100.5, -6.8, 82.9, 44, 81.6, 44, 77.9, 50, -10, 50, -74.5, 45.9, -74.5, 44.7, -79.5, 43.6, -79.5, 41.7, -86.5, 33.8, -86.5, 30.4, -100.5, -7.2, -100.5, -42.8, -93.5, -49.8, 94.5, -50 )
+
+[node name="TileMap" type="TileMap" parent="Platforms"]
+position = Vector2( 1, 0 )
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 32, 32 )
+cell_clip_uv = true
+format = 1
+tile_data = PoolIntArray( 0, -1073741823, 0, 65536, -1073741823, 0, 131072, 0, 0, 196608, -1073741823, 0, 262144, 0, 0, 262171, 0, 0, 262172, 0, 0, 327680, -1073741823, 0, 327707, 1610612737, 0, 327708, 1610612737, 0, 327710, 1610612737, 0, 327712, 1610612737, 0, 327714, 1610612737, 0, 393216, 0, 0, 393243, 1610612738, 0, 393244, 1610612738, 0, 393245, 1610612738, 0, 393246, 1610612738, 0, 393247, 1610612738, 0, 458752, -1073741823, 0, 458779, 1610612738, 0, 458780, 1610612738, 0, 458781, 1610612738, 0, 458782, 1610612738, 0, 458783, 1610612738, 0, 458784, 1610612738, 0, 458785, 1610612738, 0, 524288, 0, 0, 524315, 1610612738, 0, 524316, 1610612738, 0, 524317, 1610612738, 0, 524318, -1610612734, 0, 524319, 1610612738, 0, 524320, 1610612738, 0, 524321, 1610612738, 0, 589824, -1073741823, 0, 589849, 1610612737, 0, 589851, 1610612738, 0, 589852, 1610612738, 0, 589853, 1610612738, 0, 589855, 1610612738, 0, 589856, 1610612738, 0, 655360, 0, 0, 655387, 1610612738, 0, 655388, 1610612738, 0, 655389, 1610612738, 0, 655390, 1610612738, 0, 655391, 1610612738, 0, 720896, -1073741823, 0, 720923, 1610612738, 0, 720924, 1610612738, 0, 720925, 1610612738, 0, 720926, 1610612738, 0, 720928, 1610612738, 0, 786432, 0, 0, 786459, 1610612738, 0, 786460, 1610612738, 0, 786461, 1610612738, 0, 786463, 1610612738, 0, 851968, -1073741823, 0, 851995, 1610612738, 0, 851996, 1610612738, 0, 851998, 1610612738, 0, 851999, 1610612738, 0, 917504, 0, 0, 917531, 1610612738, 0, 917532, 0, 0, 917533, 1610612738, 0, 917534, 1610612738, 0, 983040, -1073741823, 0, 983067, 1610612738, 0, 983068, 1610612738, 0, 983070, 1610612738, 0, 1048576, -1073741823, 0, 1048603, 1610612738, 0, 1048604, 1610612738, 0, 1048605, 1610612738, 0, 1048606, 1610612738, 0, 1114112, -1073741823, 0, 1114139, 1610612738, 0, 1114140, 1610612738, 0, 1114141, 1610612738, 0, 1114142, 1610612738, 0, 1179648, -1073741823, 0, 1179675, 1610612738, 0, 1179676, 1610612738, 0, 1179677, 1610612738, 0, 1179678, 1610612738, 0, 1245184, -1073741823, 0, 1245211, 1610612738, 0, 1245212, 1610612738, 0, 1245213, 1610612738, 0, 1245214, 1610612738, 0 )
+
+[node name="Platform" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 691.551, 369.11 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Platforms/Platform"]
+scale = Vector2( 2.5, 2.5 )
+texture = ExtResource( 8 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Platform"]
+scale = Vector2( 2.5, 2.5 )
+polygon = PoolVector2Array( 28.5, -44.7, 28.5, -43.3, 40.5, -28.4, 40.5, -1.5, 35.4, 4.5, 32.8, 4.5, 27.7, 6.7, 29.3, 11.5, 26.5, 11.5, 23.5, 15.5, 21, 15.5, 18.6, 16.7, 22.6, 49.5, -23.5, 49.5, -23.5, 42.3, -19.9, 19.5, -21.3, 19.5, -26.5, 14.3, -26.5, 10.2, -26.2, 9.4, -40.5, 1.8, -40.5, -27.2, -36.8, -35.5, -35.4, -35.5, -25.4, -46.5, -23.1, -46.5, -18.6, -49.5, 18.9, -49.5 )
+
+[node name="Platform3" type="StaticBody2D" parent="Platforms"]
+position = Vector2( 271.529, 164.049 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Platforms/Platform3"]
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 5 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Platform3"]
+scale = Vector2( 0.4, 0.4 )
+polygon = PoolVector2Array( 100.5, -44.6, 100.5, -6.8, 82.9, 44, 81.6, 44, 77.9, 50, -10, 50, -74.5, 45.9, -74.5, 44.7, -79.5, 43.6, -79.5, 41.7, -86.5, 33.8, -86.5, 30.4, -100.5, -7.2, -100.5, -42.8, -93.5, -49.8, 94.5, -50 )
+
+[node name="WorldComplete" parent="." instance=ExtResource( 1 )]
+position = Vector2( 984.122, 76.1961 )
+
+[node name="Enemy0" parent="." instance=ExtResource( 6 )]
+
+[node name="Items" type="Node" parent="."]
+
+[node name="Meat" type="Area2D" parent="Items"]
+position = Vector2( 272, 119 )
+scale = Vector2( 1.5, 1.5 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Items/Meat"]
+frames = SubResource( 17 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Items/Meat"]
+shape = SubResource( 18 )
+
+[node name="Score" parent="." instance=ExtResource( 11 )]
+script = SubResource( 19 )
+
+[node name="Global" parent="." instance=ExtResource( 12 )]
+[connection signal="body_entered" from="Items/Meat" to="Player" method="_on_Meat_body_entered"]
+[connection signal="body_entered" from="Items/Meat" to="Items/Meat" method="_on_Meat_body_entered"]

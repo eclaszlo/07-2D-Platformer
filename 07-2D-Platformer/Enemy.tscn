@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Esprite.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Scripts/Enemy.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=15]
+
+[node name="Enemy0" type="KinematicBody2D"]
+position = Vector2( 392.762, 446.142 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ESprite" type="AnimatedSprite" parent="."]
+position = Vector2( -0.353546, 8.75732 )
+scale = Vector2( 3, 3 )
+frames = ExtResource( 1 )
+animation = "Move"
+frame = 4
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 25.7279 )
+scale = Vector2( 3.6, 1.05 )
+shape = SubResource( 15 )

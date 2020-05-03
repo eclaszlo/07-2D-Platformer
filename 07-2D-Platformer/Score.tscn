@@ -1,0 +1,11 @@
+[gd_scene format=2]
+
+[node name="Score" type="Label"]
+margin_left = 80.6103
+margin_top = 7.77819
+margin_right = 120.61
+margin_bottom = 21.7782
+text = "Score"
+__meta__ = {
+"_edit_use_anchors_": false
+}
